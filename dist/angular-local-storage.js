@@ -1,6 +1,6 @@
 /**
  * An Angular module that gives you access to the browsers local storage
- * @version v0.2.3 - 2015-10-11
+ * @version v0.2.3 - 2016-01-14
  * @link https://github.com/grevory/angular-local-storage
  * @author grevory <greg@gregpike.ca>
  * @license MIT License, http://www.opensource.org/licenses/MIT
@@ -320,7 +320,10 @@ angularLocalStorage.provider('localStorageService', function() {
           expiryDate.setTime(expiryDate.getTime() + (-1 * 24 * 60 * 60 * 1000));
           expiry = "; expires=" + expiryDate.toGMTString();
           value = '';
-        } else if (isNumber(daysToExpiry) && daysToExpiry !== 0) {
+          //if the value is undefined set the cookie to session cookie
+        } else if (daysToExpiry == undefined) {
+          expiry = "; expires= Session";
+        }else if (isNumber(daysToExpiry) && daysToExpiry !== 0) {
           expiryDate.setTime(expiryDate.getTime() + (daysToExpiry * 24 * 60 * 60 * 1000));
           expiry = "; expires=" + expiryDate.toGMTString();
         } else if (cookie.expiry !== 0) {

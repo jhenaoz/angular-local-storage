@@ -302,7 +302,10 @@ angularLocalStorage.provider('localStorageService', function() {
           expiryDate.setTime(expiryDate.getTime() + (-1 * 24 * 60 * 60 * 1000));
           expiry = "; expires=" + expiryDate.toGMTString();
           value = '';
-        } else if (isNumber(daysToExpiry) && daysToExpiry !== 0) {
+          //if the value is undefined set the cookie to session cookie
+        } else if (daysToExpiry == undefined) {
+          expiry = "; expires= Session";
+        }else if (isNumber(daysToExpiry) && daysToExpiry !== 0) {
           expiryDate.setTime(expiryDate.getTime() + (daysToExpiry * 24 * 60 * 60 * 1000));
           expiry = "; expires=" + expiryDate.toGMTString();
         } else if (cookie.expiry !== 0) {
